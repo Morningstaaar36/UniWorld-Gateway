@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Update Publication</title>
+        <!-- Bootstrap CSS -->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+            body {
+                background-color: #fff; /* Set background color to black */
+                color: #000; /* Set text color to white */
+                padding: 20px;
+            }
+            .container {
+                margin-top: 50px;
+            }
+            h1 {
+                color: #007bff;
+                margin-bottom: 30px;
+            }
+            .form-group {
+                margin-bottom: 20px;
+            }
+            /* Navbar styles */
+            .navbar {
+                background-color: #363d52 !important; /* Set navbar background color to black */
+            }
+            .navbar-brand, .navbar-nav .nav-link {
+                color: #fff !important; /* Set navbar text color to white */
+            }
+            .navbar-nav .nav-link:hover {
+                color: #ccc !important; /* Set navbar text color on hover */
+            }
+        </style>
+    </head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">University</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'profile_home_by_username' username=username %}">Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'applicationHomeRenderer' username=username %}">Application</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'publication_home_by_username' username=username %}">Publication</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container">
+    <h1>Update Publication</h1>
+    <form action="{% url 'updaterPublication' username=username %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="publication_id" value="{{ publication_id }}">
+        <div class="form-group">
+            <label for="title">Title:</label>
+            <input type="text" name="title" id="title" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="publication_date">Publication Date:</label>
+            <input type="date" name="publication_date" id="publication_date" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="journal_name">Journal Name:</label>
+            <input type="text" name="journal_name" id="journal_name" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="pdf_blob">PDF Blob:</label>
+            <input type="file" name="pdf_blob" id="pdf_blob" class="form-control-file">
+        </div>
+        <button type="submit" class="btn btn-primary">Update Publication</button>
+    </form>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

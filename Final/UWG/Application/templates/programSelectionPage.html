@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Program Selection for {{ username }}</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+            display: inline-block;
+        }
+        .card h2 {
+            margin-top: 0;
+        }
+        .actions {
+            margin-top: 10px;
+        }
+        .actions a {
+            margin-right: 10px;
+        }
+        .add-option {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">University</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'profile_home_by_username' username=username %}">Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'applicationHomeRenderer' username=username %}">Application</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'publication_home_by_username' username=username %}">Publication</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container">
+    <h1>Program Selection for {{ username }}</h1>
+    {% if program_selections %}
+        {% for program_selection in program_selections %}
+            <div class="card">
+                <h2>{{ program_selection.programme_name }}</h2>
+                <p><strong>University:</strong> {{ program_selection.university_name }}</p>
+                <p><strong>Department:</strong> {{ program_selection.department_name }}</p>
+                <p><strong>Tuition Fee:</strong> {{ program_selection.tuition_fee }}</p>
+                <p><strong>Duration:</strong> {{ program_selection.duration }}</p>
+                <p><strong>Application Deadline:</strong> {{ program_selection.application_deadline }}</p>
+                <p><strong>Programme Ranking:</strong> {{ program_selection.programme_ranking }}</p>
+                <p><strong>Programme Max Students:</strong> {{ program_selection.programme_max_student }}</p>
+                <div class="actions">
+                    <a href="{% url 'deleteProgramSelection' username=username %}?program_application_id={{ program_selection.program_application_id }}">Delete</a>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No program selections available.</p>
+    {% endif %}
+    <div class="add-option">
+        <a href="{% url 'addProgramSelectionRenderer' username=username %}">Add Program Selection</a>
+    </div>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

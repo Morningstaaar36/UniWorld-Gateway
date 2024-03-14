@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add or Update Contact Information</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #fff; /* Set background color to black */
+            color: #000; /* Set text color to white */
+            padding: 20px;
+        }
+        h1 {
+            color: #007bff; /* Set heading color to white */
+        }
+        .navbar {
+            background-color: #363d52 !important; /* Set navbar background color to black */
+        }
+        .navbar-brand, .navbar-nav .nav-link {
+            color: #fff !important; /* Set navbar text color to white */
+        }
+        .navbar-nav .nav-link:hover {
+            color: #ccc !important; /* Set navbar text color on hover */
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">University</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <!-- Adjust the URLs according to your requirements -->
+                <a class="nav-link" href="{% url 'profile_home_by_username' username=username %}">Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'applicationHomeRenderer' username=username %}">Application</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'publication_home_by_username' username=username %}">Publication</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!-- End Navbar -->
+
+<h1>Add or Update Contact Information</h1>
+
+{% if workType == "add" %}
+<!-- Form for adding contact information -->
+<form method="post" action="{% url 'addContactInfo' username=username %}">
+    {% csrf_token %}
+    <input type="hidden" name="workType" value="add">
+    <!-- Include hidden input field for application ID -->
+    <input type="hidden" name="application_id" value="{{ application_id }}">
+
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" name="email" value="example@example.com"><br>
+
+    <label for="phone">Phone:</label><br>
+    <input type="tel" id="phone" name="phone" value="123-456-7890"><br>
+
+    <label for="alternative_email">Alternative Email:</label><br>
+    <input type="email" id="alternative_email" name="alternative_email" value="example2@example.com"><br>
+
+    <button type="submit">Add Contact Information</button>
+</form>
+{% endif %}
+{% if workType == "update" %}
+<!-- Form for updating contact information -->
+<form id="updateForm" method="post" action="{% url 'updateContactInfo' username=username %}">
+    {% csrf_token %}
+    <input type="hidden" name="workType" value="update">
+    <!-- Include hidden input field for application ID -->
+    <input type="hidden" name="application_id" value="{{ application_id }}">
+
+    <label><input type="checkbox" name="update_email" value="true"> Update Email</label><br>
+    <label><input type="checkbox" name="update_phone" value="true"> Update Phone</label><br>
+    <label><input type="checkbox" name="update_alternative_mail" value="true"> Update Alternative Email</label><br>
+
+    <label for="email">New Email:</label><br>
+    <input type="email" id="email" name="email"><br>
+
+    <label for="phone">New Phone:</label><br>
+    <input type="tel" id="phone" name="phone"><br>
+
+    <label for="alternative_mail">New Alternative Email:</label><br>
+    <input type="email" id="alternative_mail" name="alternative_mail"><br>
+
+    <button type="button" onclick="submitForm()">Update Contact Information</button>
+</form>
+{% endif %}
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    function submitForm() {
+        const form = document.getElementById('updateForm');
+        form.submit();
+    }
+</script>
+
+</body>
+
+</html>

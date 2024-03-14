@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Publication</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #fff; /* Set background color to black */
+            color: #000; /* Set text color to white */
+            padding: 20px;
+        }
+        h1 {
+            color: #007bff; /* Set heading color to white */
+        }
+        .navbar {
+            background-color: #363d52 !important; /* Set navbar background color to black */
+        }
+        .navbar-brand, .navbar-nav .nav-link {
+            color: #fff !important; /* Set navbar text color to white */
+        }
+        .navbar-nav .nav-link:hover {
+            color: #ccc !important; /* Set navbar text color on hover */
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">University</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'profile_home_by_username' username=username %}">Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'applicationHomeRenderer' username=username %}">Application</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'publication_home_by_username' username=username %}">Publication</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<h1>Add Publication</h1>
+<p>Username: {{ username }}</p>
+    
+<form method="post" action="{% url 'addPublication' username=username %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="hidden" name="student_id" value="{{ student_id }}">
+        
+    <label for="title">Title:</label><br>
+    <input type="text" id="title" name="title" required><br>
+        
+    <label for="publication_date">Publication Date:</label><br>
+    <input type="date" id="publication_date" name="publication_date" required><br>
+        
+    <label for="journal_name">Journal Name:</label><br>
+    <input type="text" id="journal_name" name="journal_name" required><br>
+        
+    <label for="pdf_blob">Upload PDF:</label><br>
+    <input type="file" id="pdf_blob" name="pdf_blob"><br>
+        
+    <!-- Add more fields as needed -->
+
+    <input type="submit" value="Submit">
+</form>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Information</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #fff; /* Set background color to black */
+            color: #000; /* Set text color to white */
+            padding: 20px; /* Add padding for better spacing */
+        }
+        h1 {
+            color: #007bff; /* Set heading color to white */
+        }
+        ul {
+            list-style: none; /* Remove bullet points from list */
+            padding: 0; /* Remove default padding from list */
+        }
+        li {
+            margin-bottom: 10px; /* Add margin between list items */
+        }
+        img {
+            max-width: 200px; /* Limit image width to 200px */
+            height: auto; /* Maintain aspect ratio */
+            margin-top: 20px; /* Add margin above image */
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">University</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'profile_home_by_username' username=username %}">Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'applicationHomeRenderer' username=username %}">Application</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'publication_home_by_username' username=username %}">Publication</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container mt-4"> <!-- Add Bootstrap container for better layout -->
+    <h1>Personal Information for {{ username }}</h1>
+    <ul>
+        <li><strong>Name:</strong> {{ name }}</li>
+        <li><strong>Full Name:</strong> {{ full_name }}</li>
+        <li><strong>Legal Name:</strong> {{ legal_name }}</li>
+        <li><strong>Maiden Name:</strong> {{ maiden_name }}</li>
+    </ul>
+    {% if image_data %}
+    <img src="data:image/png;base64,{{ image_data }}" alt="User Image" width="200" height="200">
+    {% else %}
+    <p>No image available.</p>
+    {% endif %}
+</div>
+
+<!-- Bootstrap JS and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

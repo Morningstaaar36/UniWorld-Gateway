@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Publication Home</title>
+        <!-- Bootstrap CSS -->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+            body {
+                background-color: #fff; /* Set background color to black */
+                color: #000; /* Set text color to white */
+                padding: 20px;
+            }
+            h1 {
+                color: #007bff; /* Set heading color to white */
+            }
+            .navbar {
+                background-color: #363d52 !important; /* Set navbar background color to black */
+            }
+            .navbar-brand, .navbar-nav .nav-link {
+                color: #fff !important; /* Set navbar text color to white */
+            }
+            .navbar-nav .nav-link:hover {
+                color: #ccc !important; /* Set navbar text color on hover */
+            }
+            .publication-actions {
+                margin-top: 10px;
+            }
+            .publication-actions a {
+                color: #000;
+                margin-right: 10px;
+            }
+            .add-option {
+                margin-top: 20px;
+            }
+            .add-option a {
+                color: #000;
+            }
+        </style>
+    </head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">University</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'profile_home_by_username' username=username %}">Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'applicationHomeRenderer' username=username %}">Application</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'publication_home_by_username' username=username %}">Publication</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<h1>Publications for {{ username }}</h1>
+    
+{% if has_publications %}
+    <ul>
+        {% for publication in publications %}
+            <li>
+                <strong>Title:</strong> {{ publication.1 }}<br>
+                <strong>Publication Date:</strong> {{ publication.2 }}<br>
+                <strong>Journal Name:</strong> {{ publication.3 }}<br>
+                {% if publication.4 %}
+                    <object data="data:application/pdf;base64,{{ publication.4 }}" type="application/pdf" width="600" height="400">
+                        <embed src="data:application/pdf;base64,{{ publication.4 }}" type="application/pdf" />
+                    </object><br>
+                    <div class="publication-actions">
+                        <a href="{% url 'updatePublicationRenderer' username=username %}?publication_id={{ publication.0 }}">Update</a>
+                        <a href="{% url 'deletePublication' username=username %}?publication_id={{ publication.0 }}">Delete</a>
+                    </div>
+                {% else %}
+                    No PDF available<br>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No publications found for this user.</p>
+{% endif %}
+
+<div class="add-option">
+    <a href="{% url 'addPublicationRenderer' username=username %}">Add Publication</a>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add or Update Biological Info</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #fff;
+            /* Set background color to black */
+            color: #007bff;
+            /* Set text color to white */
+            font-family: Arial, sans-serif;
+            /* Set font family */
+            padding: 20px;
+            /* Add padding */
+        }
+
+        h1 {
+            color: #007bff;
+            /* Set heading color to white */
+        }
+
+        label {
+            color: #007bff;
+            /* Set label text color to white */
+        }
+
+        input {
+            color: #007bff;
+            /* Set input text color to black */
+            background-color: #fff;
+            /* Set input background color to white */
+        }
+
+        button {
+            color: #fff;
+            /* Set button text color to white */
+            background-color: #007bff;
+            /* Set button background color to dark gray */
+            border: none;
+            /* Remove border */
+            padding: 5px 10px;
+            /* Add padding */
+            cursor: pointer;
+            /* Set cursor to pointer */
+        }
+
+        button:hover {
+            background-color: #555;
+            /* Darken button background color on hover */
+        }
+        .navbar {
+        background-color: #363d52 !important;
+        /* Set navbar background color to dark gray */
+    }
+
+    .navbar-brand,
+    .navbar-nav .nav-link {
+        color: #fff !important;
+        /* Set navbar text color to white */
+    }
+
+    .navbar-nav .nav-link:hover {
+        color: #ccc !important;
+        /* Set navbar text color to light gray on hover */
+    }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">University</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'profile_home_by_username' username=username %}">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'applicationHomeRenderer' username=username %}">Application</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"
+                        href="{% url 'publication_home_by_username' username=username %}">Publication</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <h1>Add or Update Biological Info</h1>
+    <h1>Welcome, {{ username }}</h1> <!-- Display the username -->
+    <p>Application ID: {{ application_id }}</p>
+
+    {% if workType == "add" %}
+    <!-- Form for adding biological info -->
+    <form method="post" action="{% url 'addBiologicalInfo' username=username %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="workType" value="add">
+        <input type="hidden" name="application_id" value="{{ application_id }}">
+        <label for="first_name">First Name:</label><br>
+        <input type="text" id="first_name" name="first_name" value="John" required><br><br>
+
+        <label for="last_name">Last Name:</label><br>
+        <input type="text" id="last_name" name="last_name" value="Doe" required><br><br>
+
+        <label for="date_of_birth">Date of Birth:</label><br>
+        <input type="date" id="date_of_birth" name="date_of_birth" value="1990-01-01" required><br><br>
+
+        <label for="place_of_birth">Place of Birth:</label><br>
+        <input type="text" id="place_of_birth" name="place_of_birth" value="New York" required><br><br>
+
+        <label for="country_of_birth">Country of Birth:</label><br>
+        <input type="text" id="country_of_birth" name="country_of_birth" value="USA" required><br><br>
+
+        <label for="city_of_birth">City of Birth:</label><br>
+        <input type="text" id="city_of_birth" name="city_of_birth" value="New York City" required><br><br>
+
+        <label for="gender">Gender:</label><br>
+        <input type="text" id="gender" name="gender" value="Male"><br><br>
+
+        <label for="blood_type">Blood Type:</label><br>
+        <input type="text" id="blood_type" name="blood_type" value="O+"><br><br>
+
+        <label for="height">Height (in cm):</label><br>
+        <input type="number" id="height" name="height" value="180"><br><br>
+
+        <label for="weight">Weight (in kg):</label><br>
+        <input type="number" id="weight" name="weight" value="75"><br><br>
+
+        <label for="hair_color">Hair Color:</label><br>
+        <input type="text" id="hair_color" name="hair_color" value="Brown"><br><br>
+
+        <label for="eye_color">Eye Color:</label><br>
+        <input type="text" id="eye_color" name="eye_color" value="Blue"><br><br>
+
+        <label for="handedness">Handedness:</label><br>
+        <input type="text" id="handedness" name="handedness" value="Right"><br><br>
+
+        <label for="marital_status">Marital Status:</label><br>
+        <input type="text" id="marital_status" name="marital_status" value="Single"><br><br>
+
+        <label for="religion">Religion:</label><br>
+        <input type="text" id="religion" name="religion" value="Christian"><br><br>
+
+        <label for="ethnicity">Ethnicity:</label><br>
+        <input type="text" id="ethnicity" name="ethnicity" value="Caucasian"><br><br>
+
+        <label for="nationality">Nationality:</label><br>
+        <input type="text" id="nationality" name="nationality" value="American"><br><br>
+
+        <label for="native_language">Native Language:</label><br>
+        <input type="text" id="native_language" name="native_language" value="English"><br><br>
+
+        <label for="citizenship">Citizenship:</label><br>
+        <input type="text" id="citizenship" name="citizenship" value="American"><br><br>
+
+        <label for="disability">Disability:</label><br>
+        <input type="text" id="disability" name="disability" value="None"><br><br>
+
+        <label for="medical_reports">Medical Reports:</label><br>
+        <input type="file" id="medical_reports" name="medical_reports"><br><br>
+
+        <button type="submit">Add Biological Info</button>
+    </form>
+    {% endif %}
+
+    {% if workType == "update" %}
+    <!-- Form for updating biological info -->
+    <form method="post" action="{% url 'updateBiologicalInfo' username=username %}" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <input type="hidden" name="workType" value="update">
+        <input type="hidden" name="application_id" value="{{ application_id }}">
+
+        <label><input type="checkbox" name="update_first_name" value="true"> Update First Name</label><br>
+        <label><input type="checkbox" name="update_last_name" value="true"> Update Last Name</label><br>
+        <label><input type="checkbox" name="update_date_of_birth" value="true"> Update Date of Birth</label><br>
+        <label><input type="checkbox" name="update_place_of_birth" value="true"> Update Place of Birth</label><br>
+        <label><input type="checkbox" name="update_country_of_birth" value="true"> Update Country of Birth</label><br>
+        <label><input type="checkbox" name="update_city_of_birth" value="true"> Update City of Birth</label><br>
+        <label><input type="checkbox" name="update_gender" value="true"> Update Gender</label><br>
+        <label><input type="checkbox" name="update_blood_type" value="true"> Update Blood Type</label><br>
+        <label><input type="checkbox" name="update_height" value="true"> Update Height</label><br>
+        <label><input type="checkbox" name="update_weight" value="true"> Update Weight</label><br>
+        <label><input type="checkbox" name="update_hair_color" value="true"> Update Hair Color</label><br>
+        <label><input type="checkbox" name="update_eye_color" value="true"> Update Eye Color</label><br>
+        <label><input type="checkbox" name="update_handedness" value="true"> Update Handedness</label><br>
+        <label><input type="checkbox" name="update_marital_status" value="true"> Update Marital Status</label><br>
+        <label><input type="checkbox" name="update_religion" value="true"> Update Religion</label><br>
+        <label><input type="checkbox" name="update_ethnicity" value="true"> Update Ethnicity</label><br>
+        <label><input type="checkbox" name="update_nationality" value="true"> Update Nationality</label><br>
+        <label><input type="checkbox" name="update_native_language" value="true"> Update Native Language</label><br>
+        <label><input type="checkbox" name="update_citizenship" value="true"> Update Citizenship</label><br>
+        <label><input type="checkbox" name="update_disability" value="true"> Update Disability</label><br>
+        <label><input type="checkbox" name="update_allergies" value="true"> Update Allergies</label><br>
+        <label><input type="checkbox" name="update_medical_reports" value="true"> Update Medical Reports</label><br>
+        <!-- Checkboxes for selecting which fields to update -->
+        <!-- Add checkboxes for other fields to update -->
+
+        <!-- Input fields for updating biological info -->
+        <label for="new_first_name">New First Name:</label><br>
+        <input type="text" id="new_first_name" name="new_first_name"><br><br>
+        <!-- Add input fields for updating other fields -->
+        <label for="new_last_name">New Last Name:</label><br>
+        <input type="text" id="new_last_name" name="new_last_name"><br><br>
+
+        <label for="new_date_of_birth">New Date of Birth:</label><br>
+        <input type="date" id="new_date_of_birth" name="new_date_of_birth"><br><br>
+
+        <label for="new_place_of_birth">New Place of Birth:</label><br>
+        <input type="text" id="new_place_of_birth" name="new_place_of_birth"><br><br>
+
+        <label for="new_country_of_birth">New Country of Birth:</label><br>
+        <input type="text" id="new_country_of_birth" name="new_country_of_birth"><br><br>
+
+        <label for="new_city_of_birth">New City of Birth:</label><br>
+        <input type="text" id="new_city_of_birth" name="new_city_of_birth"><br><br>
+
+        <label for="new_gender">New Gender:</label><br>
+        <input type="text" id="new_gender" name="new_gender"><br><br>
+
+        <label for="new_blood_type">New Blood Type:</label><br>
+        <input type="text" id="new_blood_type" name="new_blood_type"><br><br>
+
+        <label for="new_height">New Height (in cm):</label><br>
+        <input type="number" id="new_height" name="new_height"><br><br>
+
+        <label for="new_weight">New Weight (in kg):</label><br>
+        <input type="number" id="new_weight" name="new_weight"><br><br>
+
+        <label for="new_hair_color">New Hair Color:</label><br>
+        <input type="text" id="new_hair_color" name="new_hair_color"><br><br>
+
+        <label for="new_eye_color">New Eye Color:</label><br>
+        <input type="text" id="new_eye_color" name="new_eye_color"><br><br>
+
+        <label for="new_handedness">New Handedness:</label><br>
+        <input type="text" id="new_handedness" name="new_handedness"><br><br>
+
+        <label for="new_marital_status">New Marital Status:</label><br>
+        <input type="text" id="new_marital_status" name="new_marital_status"><br><br>
+
+        <label for="new_religion">New Religion:</label><br>
+        <input type="text" id="new_religion" name="new_religion"><br><br>
+
+        <label for="new_ethnicity">New Ethnicity:</label><br>
+        <input type="text" id="new_ethnicity" name="new_ethnicity"><br><br>
+
+        <label for="new_nationality">New Nationality:</label><br>
+        <input type="text" id="new_nationality" name="new_nationality"><br><br>
+
+        <label for="new_native_language">New Native Language:</label><br>
+        <input type="text" id="new_native_language" name="new_native_language"><br><br>
+
+        <label for="new_citizenship">New Citizenship:</label><br>
+        <input type="text" id="new_citizenship" name="new_citizenship"><br><br>
+
+        <label for="new_disability">New Disability:</label><br>
+        <input type="text" id="new_disability" name="new_disability"><br><br>
+
+        <label for="new_allergies">New Allergies:</label><br>
+        <input type="text" id="new_allergies" name="new_allergies"><br><br>
+
+        <label for="new_medical_reports">New Medical Reports:</label><br>
+        <input type="file" id="new_medical_reports" name="new_medical_reports"><br><br>
+
+        <button type="submit">Update Biological Info</button>
+    </form>
+    {% endif %}
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

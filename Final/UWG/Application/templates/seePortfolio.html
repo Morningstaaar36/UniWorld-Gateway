@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Portfolio</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #fff; /* Set background color to black */
+            color: #000; /* Set text color to white */
+            padding: 20px; /* Add padding for better spacing */
+        }
+        h1, h2, h3 {
+            color: #007bff; /* Set heading color to white */
+        }
+        p {
+            color: #000; /* Set paragraph text color to light gray */
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">University</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'profile_home_by_username' username=username %}">Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'applicationHomeRenderer' username=username %}">Application</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'publication_home_by_username' username=username %}">Publication</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container mt-4"> <!-- Add Bootstrap container for better layout -->
+    <h1>View Portfolio</h1>
+    <h2>Welcome, {{ username }}</h2>
+
+    <h3>LinkedIn Profile:</h3>
+    <p>{{ linked_in }}</p>
+
+    <h3>Extra Curricular Activity:</h3>
+    <p>{{ extra_curricular_activity }}</p>
+
+    <h3>Resume:</h3>
+    {% if resume_base64 %}
+    <embed src="data:application/pdf;base64,{{ resume_base64 }}" type="application/pdf" width="100%" height="600px">
+    {% else %}
+    <p>No resume available.</p>
+    {% endif %}
+</div>
+
+<!-- Bootstrap JS and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

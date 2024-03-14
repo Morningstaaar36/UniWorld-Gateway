@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Programs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            padding: 20px;
+        }
+
+        .card-header {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .card-content {
+            margin-bottom: 15px;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .checkbox-label {
+            margin-right: 10px;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- <div class="container">
+        <h2>Select Programs</h2>
+        <form action="{% url 'select_program' username=username %}" method="post">
+            {% csrf_token %}
+
+            {% for program in programs %}
+            <div class="card">
+                <div class="card-header">{{ program.programme_name }}</div>
+                <div class="card-content">
+                    <p><strong>Tuition Fee:</strong> {{ program.tuition_fee }}</p>
+                    <p><strong>Duration:</strong> {{ program.duration }}</p>
+                    <p><strong>Application Deadline:</strong> {{ program.application_deadline }}</p>
+                    <p><strong>Programme Ranking:</strong> {{ program.programme_ranking }}</p>
+                    <p><strong>Department Name:</strong> {{ program.department_name }}</p>
+                    <p><strong>Department Head:</strong> {{ program.department_head }}</p>
+                    <p><strong>Department Established Date:</strong> {{ program.established_date }}</p>
+                    <p><strong>University Name:</strong> {{ program.name }}</p>
+                    <p><strong>University Location:</strong> {{ program.location }}</p>
+                    <p><strong>University Established Date:</strong> {{ program.established_date }}</p>
+                    <p><strong>University Rank:</strong> {{ program.rank }}</p>
+                </div>
+                
+                <div class="checkbox-container">
+                   <input type="hidden" name="program_ids" value="{{ program.id }}">
+                    <input type="checkbox" id="program_{{ program.id }}" name="selected_programs" value="{{ program.id }}">
+                    <label class="checkbox-label" for="program_{{ program.id }}">Select Program</label>
+                </div>
+            </div>
+            {% endfor %}
+
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+     -->
+     <div class="container">
+        <h2>Select Programs</h2>
+        <form action="{% url 'select_program' username=username %}" method="post">
+            {% csrf_token %}
+    
+            {% for program in programs %}
+            <div class="card">
+                <div class="card-header">{{ program.programme_name }}</div>
+                <div class="card-content">
+                    <p><strong>Tuition Fee:</strong> {{ program.tuition_fee }}</p>
+                    <p><strong>Duration:</strong> {{ program.duration }}</p>
+                    <p><strong>Application Deadline:</strong> {{ program.application_deadline }}</p>
+                    <p><strong>Programme Ranking:</strong> {{ program.programme_ranking }}</p>
+                    <p><strong>Department Name:</strong> {{ program.department_name }}</p>
+                    <p><strong>Department Head:</strong> {{ program.department_head }}</p>
+                    <p><strong>Department Established Date:</strong> {{ program.established_date }}</p>
+                    <p><strong>University Name:</strong> {{ program.name }}</p>
+                    <p><strong>University Location:</strong> {{ program.location }}</p>
+                    <p><strong>University Established Date:</strong> {{ program.established_date }}</p>
+                    <p><strong>University Rank:</strong> {{ program.rank }}</p>
+                </div>
+                
+                <div class="checkbox-container">
+                    <input type="checkbox" id="program_{{ program.id }}" name="selected_programs" value="{{ program.id }}">
+                    <label class="checkbox-label" for="program_{{ program.id }}">Select Program</label>
+                    <!-- Include hidden input fields for selected programs -->
+                    <input type="hidden" name="selected_program_names" value="{{ program.programme_name }}">
+                    <input type="hidden" name="selected_program_tuition_fees" value="{{ program.tuition_fee }}">
+                    <input type="hidden" name="selected_program_durations" value="{{ program.duration }}">
+                    <input type="hidden" name="selected_program_application_deadlines" value="{{ program.application_deadline }}">
+                    <input type="hidden" name="selected_program_programme_rankings" value="{{ program.programme_ranking }}">
+                    <input type="hidden" name="selected_program_department_names" value="{{ program.department_name }}">
+                    <input type="hidden" name="selected_program_department_heads" value="{{ program.department_head }}">
+                    <input type="hidden" name="selected_program_established_dates" value="{{ program.established_date }}">
+                    <input type="hidden" name="selected_program_university_names" value="{{ program.name }}">
+                    <input type="hidden" name="selected_program_university_locations" value="{{ program.location }}">
+                    <input type="hidden" name="selected_program_university_established_dates" value="{{ program.established_date }}">
+                    <input type="hidden" name="selected_program_university_ranks" value="{{ program.rank }}">
+                </div>
+            </div>
+            {% endfor %}
+    
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+    
+</body>
+
+</html>

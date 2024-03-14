@@ -1,0 +1,48 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Document</title>
+</head>
+<body>
+    <h1>Add Document</h1>
+    <form action="{% url 'add_document_analyze' username=username %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="type">Type:</label>
+        <input type="text" id="type" name="type" required><br><br>
+
+        <label for="upload_date">Upload Date:</label>
+        <input type="date" id="upload_date" name="upload_date" required><br><br>
+
+        <label for="image">Image:</label>
+        <input type="file" id="image" name="image" accept="image/*" required><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Document</title>
+</head>
+<body>
+    <h1>Add Document</h1>
+    <form action="{% url 'add_document_analyze' username=username %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="type">Type:</label>
+        <input type="text" id="type" name="type" required><br><br>
+
+        <label for="pdf">PDF:</label>
+        <input type="file" id="pdf" name="pdf" accept=".pdf" required><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

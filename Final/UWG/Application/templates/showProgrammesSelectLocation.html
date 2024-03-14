@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Program Selection</title>
+        <!-- Bootstrap CSS -->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+            body {
+                background-color: #fff; /* Set background color to black */
+                color: #000; /* Set text color to white */
+                padding: 20px;
+            }
+    
+            .navbar {
+                background-color: #363d52 !important; /* Set navbar background color to black */
+            }
+    
+            .navbar-brand, .navbar-nav .nav-link {
+                color: #fff !important; /* Set navbar text color to white */
+            }
+    
+            .navbar-nav .nav-link:hover {
+                color: #ccc !important; /* Set navbar text color on hover */
+            }
+    
+            .card {
+                margin-bottom: 20px;
+                border: 1px solid #007bff;
+                border-radius: 5px;
+                padding: 10px;
+                background-color: #fff; /* Set card background color to dark */
+            }
+    
+            .selected {
+                background-color: #f0f0f0; /* Set selected background color to light gray */
+            }
+    
+            /* Additional custom styles can be added here */
+        </style>
+    </head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">University</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'profile_home_by_username' username=username %}">Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'applicationHomeRenderer' username=username %}">Application</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'publication_home_by_username' username=username %}">Publication</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container">
+        <h1>Program Selection</h1>
+        <p>Welcome, {{ username }}</p>
+        <form id="selectProgramForm" method="POST" action="{% url 'addProgramSelection' username=username %}">
+            {% csrf_token %}
+            <!-- Hidden input field to store selected program IDs -->
+            <input type="hidden" name="selected_programs" id="selectedPrograms">
+            <div id="programCards">
+                {% if programs %}
+                    {% for program in programs %}
+                        <div class="card">
+                            <h2>{{ program.4 }}</h2>
+                            <p><strong>University:</strong> {{ program.1 }}</p>
+                            <p><strong>University Location:</strong> {{ program.2 }}</p>
+                            <p><strong>Department:</strong> {{ program.3 }}</p>
+                            <p><strong>Tuition Fee:</strong> {{ program.5 }}</p>
+                            <p><strong>Duration:</strong> {{ program.6 }}</p>
+                            <p><strong>Application Deadline:</strong> {{ program.7 }}</p>
+                            <p><strong>Program Ranking:</strong> {{ program.8 }}</p>
+                            <p><strong>Department Max Student:</strong> {{ program.9 }}</p>
+                            <p><strong>Program Max Student:</strong> {{ program.10 }}</p>
+                            <!-- Add select button -->
+                            <button class="btn btn-primary select-program" data-program-id="{{ program.0 }}">Select</button>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No programs available for the selected location</p>
+                {% endif %}
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Selection</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Array to store selected program IDs
+            var selectedPrograms = [];
+
+            // Handle click event for select buttons
+            $('.select-program').click(function() {
+                var programId = $(this).data('program-id');
+
+                // Check if program ID is already selected
+                if (selectedPrograms.includes(programId)) {
+                    alert('Program already selected.');
+                    return;
+                }
+
+                // Add program ID to the array
+                selectedPrograms.push(programId);
+                // Update hidden input field value
+                $('#selectedPrograms').val(selectedPrograms.join(','));
+
+                // Toggle button color on click
+                $(this).toggleClass('btn-primary btn-danger');
+                // Disable button after click
+                $(this).prop('disabled', true);
+            });
+        });
+    </script>
+</body>
+</html>

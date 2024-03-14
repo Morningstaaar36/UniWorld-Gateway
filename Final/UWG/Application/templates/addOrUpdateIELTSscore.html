@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add or Update IELTS Score</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #fff; /* Set background color to black */
+            color: #000; /* Set text color to white */
+            padding: 20px;
+        }
+        h1 {
+            color: #007bff; /* Set heading color to white */
+        }
+        .navbar {
+            background-color: #363d52 !important; /* Set navbar background color to black */
+        }
+        .navbar-brand, .navbar-nav .nav-link {
+            color: #fff !important; /* Set navbar text color to white */
+        }
+        .navbar-nav .nav-link:hover {
+            color: #ccc !important; /* Set navbar text color on hover */
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">University</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'profile_home_by_username' username=username %}">Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'applicationHomeRenderer' username=username %}">Application</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'publication_home_by_username' username=username %}">Publication</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<!-- End Navbar -->
+
+<h1>Add or Update IELTS Score</h1>
+<h1>Welcome, {{ username }}</h1> <!-- Display the username -->
+
+{% if workType == "add" %}
+<!-- Form for adding IELTS score -->
+<form method="post" action="{% url 'addIELTS' username=username %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="hidden" name="workType" value="add">
+    <input type="hidden" name="application_id" value="{{ application_id }}"> <!-- Hidden input for application_id -->
+
+    <!-- Add other fields with default values as needed -->
+    <label for="test_date">Test Date:</label><br>
+    <input type="date" id="test_date" name="test_date" value="{% now 'Y-m-d' %}"><br>
+
+    <label for="test_center">Test Center:</label><br>
+    <input type="text" id="test_center" name="test_center" value="Default Test Center"><br>
+
+    <label for="writing_score">Writing Score:</label><br>
+    <input type="number" id="writing_score" name="writing_score" value="7.5"><br>
+
+    <label for="listening_score">Listening Score:</label><br>
+    <input type="number" id="listening_score" name="listening_score" value="8.0"><br>
+
+    <label for="speaking_score">Speaking Score:</label><br>
+    <input type="number" id="speaking_score" name="speaking_score" value="7.0"><br>
+
+    <label for="reading_score">Reading Score:</label><br>
+    <input type="number" id="reading_score" name="reading_score" value="7.5"><br>
+
+    <label for="transcript">Transcript (PDF):</label><br>
+    <input type="file" id="transcript" name="transcript" accept=".pdf"><br>
+
+    <button type="submit">Add IELTS Score</button>
+</form>
+{% endif %}
+
+{% if workType == "update" %}
+<!-- Form for updating IELTS score -->
+<form method="post" action="{% url 'updateIELTS' username=username %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="hidden" name="workType" value="update">
+    <input type="hidden" name="application_id" value="{{ application_id }}"> <!-- Hidden input for application_id -->
+
+    <!-- Checkbox options for selecting fields to update -->
+    <label><input type="checkbox" name="update_test_date" value="true"> Update Test Date</label><br>
+    <label><input type="checkbox" name="update_test_center" value="true"> Update Test Center</label><br>
+    <label><input type="checkbox" name="update_writing_score" value="true"> Update Writing Score</label><br>
+    <label><input type="checkbox" name="update_listening_score" value="true"> Update Listening Score</label><br>
+    <label><input type="checkbox" name="update_speaking_score" value="true"> Update Speaking Score</label><br>
+    <label><input type="checkbox" name="update_reading_score" value="true"> Update Reading Score</label><br>
+    <label><input type="checkbox" name="update_transcript" value="true"> Update Transcript</label><br><br>
+
+    <!-- Add other fields with default values as needed -->
+    <label for="test_date">Test Date:</label><br>
+    <input type="date" id="test_date" name="test_date"><br>
+
+    <label for="test_center">Test Center:</label><br>
+    <input type="text" id="test_center" name="test_center"><br>
+
+    <label for="writing_score">Writing Score:</label><br>
+    <input type="number" id="writing_score" name="writing_score"><br>
+
+    <label for="listening_score">Listening Score:</label><br>
+    <input type="number" id="listening_score" name="listening_score"><br>
+
+    <label for="speaking_score">Speaking Score:</label><br>
+    <input type="number" id="speaking_score" name="speaking_score"><br>
+
+    <label for="reading_score">Reading Score:</label><br>
+    <input type="number" id="reading_score" name="reading_score"><br>
+
+    <label for="transcript">New Transcript (PDF):</label><br>
+    <input type="file" id="transcript" name="transcript" accept=".pdf"><br>
+
+    <!-- Application ID -->
+    <label for="application_id">Application ID:</label><br>
+    <input type="number" id="application_id" name="application_id" value="{{ application_id }}"><br><br>
+
+    <button type="submit">Update IELTS Score</button>
+</form>
+{% endif %}
+
+<!-- Links to other pages -->
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

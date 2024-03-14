@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add or Update Address</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #fff;
+            color: #000;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .navbar {
+            background-color: #363d52 !important;
+        }
+
+        .navbar-dark .navbar-brand {
+            color: #ffffff !important;
+        }
+
+        .navbar-dark .navbar-toggler-icon {
+            background-color: #ffffff;
+        }
+
+        .navbar-dark .navbar-nav .nav-link {
+            color: #ffffff !important;
+        }
+
+        .navbar-dark .navbar-nav .nav-link:hover {
+            color: #ffffff !important;
+        }
+
+        h1 {
+            color: #007bff;
+        }
+
+        label {
+            color: #007bff;
+        }
+
+        input {
+            color: #007bff;
+            background-color: #ffffff;
+        }
+
+        button {
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .checkbox-group {
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">University</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Documents</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <h1>Add or Update Address</h1>
+
+    {% if workType == "add" %}
+    <!-- Form for adding address -->
+    <form method="post" action="{% url 'addAddress' username=username %}">
+        {% csrf_token %}
+        <input type="hidden" name="workType" value="add">
+        <!-- Include hidden input field for application ID -->
+        <input type="hidden" name="application_id" value="{{ application_id }}">
+
+        <label for="country">Country:</label><br>
+        <input type="text" id="country" name="country" value="Default Country" required><br><br>
+
+        <label for="city">City:</label><br>
+        <input type="text" id="city" name="city" value="Default City" required><br><br>
+
+        <label for="street">Street:</label><br>
+        <input type="text" id="street" name="street" value="Default Street" required><br><br>
+
+        <label for="post_code">Post Code:</label><br>
+        <input type="text" id="post_code" name="post_code" value="Default Post Code" required><br><br>
+
+        <button type="submit">Add Address</button>
+    </form>
+    {% endif %}
+
+    {% if workType == "update" %}
+    <!-- Form for updating address -->
+    <form id="updateForm" method="post" action="{% url 'updateAddress' username=username %}">
+        {% csrf_token %}
+        <input type="hidden" name="workType" value="update">
+        <!-- Include hidden input field for application ID -->
+        <input type="hidden" name="application_id" value="{{ application_id }}">
+
+        <label><input type="checkbox" name="update_country" value="true"> Update Country</label><br>
+        <label><input type="checkbox" name="update_city" value="true"> Update City</label><br>
+        <label><input type="checkbox" name="update_street" value="true"> Update Street</label><br>
+        <label><input type="checkbox" name="update_post_code" value="true"> Update Post Code</label><br><br>
+
+        <label for="new_country">New Country:</label><br>
+        <input type="text" id="new_country" name="new_country"><br><br>
+
+        <label for="new_city">New City:</label><br>
+        <input type="text" id="new_city" name="new_city"><br><br>
+
+        <label for="new_street">New Street:</label><br>
+        <input type="text" id="new_street" name="new_street"><br><br>
+
+        <label for="new_post_code">New Post Code:</label><br>
+        <input type="text" id="new_post_code" name="new_post_code"><br><br>
+
+        <button type="button" onclick="submitForm()">Update Address</button>
+    </form>
+    {% endif %}
+
+    <script>
+        function submitForm() {
+            const form = document.getElementById('updateForm');
+            form.submit();
+        }
+    </script>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

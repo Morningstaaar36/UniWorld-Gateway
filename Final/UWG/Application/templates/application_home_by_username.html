@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url("{% static 'background.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            color: #ffffff;
+            /* Set text color to white for better readability on the background */
+        }
+
+        .card {
+            background-color: #8B4513;
+            /* Wood color */
+            color: #ffffff;
+            /* White text */
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            color: #ffffff;
+            /* White text */
+        }
+
+        .btn-primary {
+            background-color: #ffffff;
+            /* White button */
+            color: #8B4513;
+            /* Wood color text */
+        }
+
+        .btn-primary:hover {
+            background-color: #f2f2f2;
+            /* Lighter background on hover */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h1>Welcome, {{ username }}</h1>
+        <h2 class="mb-4">What would you like to do?</h2>
+        {% if has_application %}
+        <p>You already have an application.</p>
+        {% else %}
+        <p>You don't have an application yet.</p>
+        {% endif %}
+
+        {% if new_application %}
+        <p>Application created successfully!</p>
+        {% endif %}
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Create Application</h5>
+                        <p class="card-text">Click below to create a new application.</p>
+                        {% if has_application %}
+                        <button class="btn btn-primary" disabled>Create Application</button>
+                        {% else %}
+                        <a href="{% url 'create_application' username=username %}" class="btn btn-primary">Create
+                            Application</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Update Application</h5>
+                        <p class="card-text">Click below to update your existing application.</p>
+                        {% if has_application %}
+                        <a href="{% url 'update_application' username=username %}" class="btn btn-primary">Update
+                            Application</a>
+                        {% else %}
+                        <button class="btn btn-primary" disabled>Update Application</button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Delete Application</h5>
+                        <p class="card-text">Click below to delete your existing application.</p>
+                        {% if has_application %}
+                        <a href="{% url 'delete_application' username=username %}" class="btn btn-primary">Delete
+                            Application</a>
+                        {% else %}
+                        <button class="btn btn-primary" disabled>Delete Application</button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">View Application</h5>
+                        <p class="card-text">Click below to view your existing application.</p>
+                        {% if has_application %}
+                        <a href="{% url 'view_application' username=username %}" class="btn btn-primary">View
+                            Application</a>
+                        {% else %}
+                        <button class="btn btn-primary" disabled>View Application</button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!-- Card for Adding Recommendation -->
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Add Recommendation</h5>
+                            <p class="card-text">Click below to add a new recommendation.</p>
+                            <a href="{% url 'add_recommendation' username=username %}" class="btn btn-primary">Add
+                                Recommendation</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card for Deleting Recommendation -->
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Delete Recommendation</h5>
+                            <p class="card-text">Click below to delete a recommendation.</p>
+                            <a href="{% url 'delete_recommendation' username=username %}" class="btn btn-primary">Delete
+                                Recommendation</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card for Viewing Recommendation -->
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">View Recommendation</h5>
+                            <p class="card-text">Click below to view recommendations.</p>
+                            <a href="{% url 'view_recommendation' username=username %}" class="btn btn-primary">View
+                                Recommendation</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card for Updating Recommendation -->
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Update Recommendation</h5>
+                            <p class="card-text">Click below to update a recommendation.</p>
+                            <a href="{% url 'update_recommendation' username=username %}" class="btn btn-primary">Update
+                                Recommendation</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Add Contact Info</h5>
+                            <p class="card-text">Click below to add contact info.</p>
+                            <a href="{% url 'add_contact_info' username=username %}" class="btn btn-primary">Add Contact
+                                Info</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Delete Contact Info</h5>
+                            <p class="card-text">Click below to delete contact info.</p>
+                            <a href="{% url 'delete_contact_info' username=username %}" class="btn btn-primary">Delete
+                                Contact Info</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">View Contact Info</h5>
+                            <p class="card-text">Click below to view contact info.</p>
+                            <a href="{% url 'view_contact_info' username=username %}" class="btn btn-primary">View
+                                Contact Info</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Update Contact Info</h5>
+                            <p class="card-text">Click below to update contact info.</p>
+                            <a href="{% url 'update_contact_info' username=username %}" class="btn btn-primary">Update
+                                Contact Info</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <!-- Citizenship Info Operations -->
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Add Citizenship Info</h5>
+                            <p class="card-text">Click below to add citizenship info.</p>
+                            <a href="{% url 'add_citizenship_info' username=username %}" class="btn btn-primary">Add
+                                Citizenship Info</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Delete Citizenship Info</h5>
+                            <p class="card-text">Click below to delete citizenship info.</p>
+                            <a href="{% url 'delete_citizenship_info' username=username %}"
+                                class="btn btn-primary">Delete Citizenship Info</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">View Citizenship Info</h5>
+                            <p class="card-text">Click below to view citizenship info.</p>
+                            <a href="{% url 'view_citizenship_info' username=username %}" class="btn btn-primary">View
+                                Citizenship Info</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Update Citizenship Info</h5>
+                            <p class="card-text">Click below to update citizenship info.</p>
+                            <a href="{% url 'update_citizenship_info' username=username %}"
+                                class="btn btn-primary">Update Citizenship Info</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <!-- Academic Record Operations -->
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Add Academic Record</h5>
+                            <p class="card-text">Click below to add academic record.</p>
+                            <a href="{% url 'add_academic_record' username=username %}" class="btn btn-primary">Add
+                                Academic Record</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Delete Academic Record</h5>
+                            <p class="card-text">Click below to delete academic record.</p>
+                            <a href="{% url 'delete_academic_record' username=username %}"
+                                class="btn btn-primary">Delete Academic Record</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">View Academic Record</h5>
+                            <p class="card-text">Click below to view academic record.</p>
+                            <a href="{% url 'view_academic_record' username=username %}" class="btn btn-primary">View
+                                Academic Record</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Update Academic Record</h5>
+                            <p class="card-text">Click below to update academic record.</p>
+                            <a href="{% url 'update_academic_record' username=username %}"
+                                class="btn btn-primary">Update Academic Record</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <!-- Portfolio Operations -->
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Add Portfolio</h5>
+                            <p class="card-text">Click below to add portfolio.</p>
+                            <a href="{% url 'add_portfolio' username=username %}" class="btn btn-primary">Add
+                                Portfolio</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Delete Portfolio</h5>
+                            <p class="card-text">Click below to delete portfolio.</p>
+                            <a href="{% url 'delete_portfolio' username=username %}" class="btn btn-primary">Delete
+                                Portfolio</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">View Portfolio</h5>
+                            <p class="card-text">Click below to view portfolio.</p>
+                            <a href="{% url 'view_portfolio' username=username %}" class="btn btn-primary">View
+                                Portfolio</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Update Portfolio</h5>
+                            <p class="card-text">Click below to update portfolio.</p>
+                            <a href="{% url 'update_portfolio' username=username %}" class="btn btn-primary">Update
+                                Portfolio</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Add Biological Info</h5>
+                            <p class="card-text">Click below to add biological info.</p>
+                            <a href="{% url 'add_biological_info' username=username %}" class="btn btn-primary">Add
+                                Biological Info</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Delete Biological Info</h5>
+                            <p class="card-text">Click below to delete biological info.</p>
+                            <a href="{% url 'delete_biological_info' username=username %}"
+                                class="btn btn-primary">Delete Biological Info</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">View Biological Info</h5>
+                            <p class="card-text">Click below to view biological info.</p>
+                            <a href="{% url 'view_biological_info' username=username %}" class="btn btn-primary">View
+                                Biological Info</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Update Biological Info</h5>
+                            <p class="card-text">Click below to update biological info.</p>
+                            <a href="{% url 'update_biological_info' username=username %}"
+                                class="btn btn-primary">Update Biological Info</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <!-- Personal Info Operations -->
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Add Personal Info</h5>
+                            <p class="card-text">Click below to add personal info.</p>
+                            <a href="{% url 'add_personal_info' username=username %}" class="btn btn-primary">Add
+                                Personal Info</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Delete Personal Info</h5>
+                            <p class="card-text">Click below to delete personal info.</p>
+                            <a href="{% url 'delete_personal_info' username=username %}" class="btn btn-primary">Delete
+                                Personal Info</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">View Personal Info</h5>
+                            <p class="card-text">Click below to view personal info.</p>
+                            <a href="{% url 'view_personal_info' username=username %}" class="btn btn-primary">View
+                                Personal Info</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Update Personal Info</h5>
+                            <p class="card-text">Click below to update personal info.</p>
+                            <a href="{% url 'update_personal_info' username=username %}" class="btn btn-primary">Update
+                                Personal Info</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <!-- Address Operations -->
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Add Address</h5>
+                            <p class="card-text">Click below to add address.</p>
+                            <a href="{% url 'add_address' username=username %}" class="btn btn-primary">Add Address</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Delete Address</h5>
+                            <p class="card-text">Click below to delete address.</p>
+                            <a href="{% url 'delete_address' username=username %}" class="btn btn-primary">Delete Address</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">View Address</h5>
+                            <p class="card-text">Click below to view address.</p>
+                            <a href="{% url 'view_address' username=username %}" class="btn btn-primary">View Address</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Update Address</h5>
+                            <p class="card-text">Click below to update address.</p>
+                            <a href="{% url 'update_address' username=username %}" class="btn btn-primary">Update Address</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>

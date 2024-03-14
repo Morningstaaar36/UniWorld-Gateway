@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add or Update Citizenship Info</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa; /* Set background color */
+            color: #212529; /* Set text color */
+            padding: 20px; /* Add some padding */
+        }
+
+        h1 {
+            color: #007bff; /* Set heading color */
+        }
+
+        form {
+            background-color: #fff; /* Set form background color */
+            padding: 20px; /* Add some padding */
+            border-radius: 5px; /* Add border radius */
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Add shadow */
+        }
+
+        label {
+            font-weight: bold; /* Make labels bold */
+        }
+
+        button[type="submit"],
+        button[type="button"] {
+            background-color: #007bff; /* Set button background color */
+            color: #fff; /* Set button text color */
+            border: none; /* Remove border */
+            padding: 10px 20px; /* Add padding */
+            border-radius: 5px; /* Add border radius */
+            cursor: pointer; /* Add cursor pointer */
+        }
+
+        button[type="submit"]:hover,
+        button[type="button"]:hover {
+            background-color: #0056b3; /* Change background color on hover */
+        }
+        .navbar {
+        background-color: #363d52 !important;
+        /* Set navbar background color to dark gray */
+    }
+
+    .navbar-brand,
+    .navbar-nav .nav-link {
+        color: #fff !important;
+        /* Set navbar text color to white */
+    }
+
+    .navbar-nav .nav-link:hover {
+        color: #ccc !important;
+        /* Set navbar text color to light gray on hover */
+    }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Citizenship Info</a>
+    </nav>
+
+    <div class="container mt-4">
+        <h1>Add or Update Citizenship Info</h1>
+
+        {% if workType == "add" %}
+        <!-- Form for adding citizenship info -->
+        <form method="post" action="{% url 'addCitizenshipInfo' username=username %}">
+            {% csrf_token %}
+            <input type="hidden" name="workType" value="add">
+            <input type="hidden" name="application_id" value="{{ application_id }}">
+
+            <div class="form-group">
+                <label for="passport">Passport Number:</label>
+                <input type="text" class="form-control" id="passport" name="passport" value="123456789" required>
+            </div>
+
+            <div class="form-group">
+                <label for="dual_citizenship_status">Dual Citizenship Status:</label>
+                <input type="text" class="form-control" id="dual_citizenship_status" name="dual_citizenship_status" value="No">
+            </div>
+
+            <div class="form-group">
+                <label for="citizenship_number">Citizenship Number:</label>
+                <input type="text" class="form-control" id="citizenship_number" name="citizenship_number" value="987654321" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Add Citizenship Info</button>
+        </form>
+        {% endif %}
+
+        {% if workType == "update" %}
+        <!-- Form for updating citizenship info -->
+        <form id="updateForm" method="post" action="{% url 'updateCitizenshipInfo' username=username %}">
+            {% csrf_token %}
+            <input type="hidden" name="workType" value="update">
+            <input type="hidden" name="application_id" value="{{ application_id }}">
+
+            <div class="form-group">
+                <label><input type="checkbox" name="update_passport" value="true"> Update Passport Number</label><br>
+                <label><input type="checkbox" name="update_dual_citizenship" value="true"> Update Dual Citizenship Status</label><br>
+                <label><input type="checkbox" name="update_citizenship_number" value="true"> Update Citizenship Number</label><br>
+            </div>
+
+            <div class="form-group">
+                <label for="new_passport">New Passport Number:</label>
+                <input type="text" class="form-control" id="new_passport" name="new_passport" required>
+            </div>
+
+            <div class="form-group">
+                <label for="new_dual_citizenship">New Dual Citizenship Status:</label>
+                <input type="text" class="form-control" id="new_dual_citizenship" name="new_dual_citizenship">
+            </div>
+
+            <div class="form-group">
+                <label for="new_citizenship_number">New Citizenship Number:</label>
+                <input type="text" class="form-control" id="new_citizenship_number" name="new_citizenship_number" required>
+            </div>
+
+            <button type="button" class="btn btn-primary" onclick="submitForm()">Update Citizenship Info</button>
+        </form>
+        {% endif %}
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        function submitForm() {
+            const form = document.getElementById('updateForm');
+            form.submit();
+        }
+    </script>
+</body>
+
+</html>

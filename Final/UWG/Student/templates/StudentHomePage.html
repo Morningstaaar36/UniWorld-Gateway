@@ -1,0 +1,308 @@
+<!-- {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>University Carousel</title>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<style>
+body {
+  background-color: #000; /* Set background color to black */
+  color: #ffffff; /* Set text color to bright white */
+}
+
+
+.carousel {
+  position: relative; /* Set position to relative */
+  width: 70%; /* Set width */
+  margin: 20px auto; /* Center horizontally with margin */
+}
+
+.carousel-item img {
+  max-width: 100%; /* Set maximum width for images */
+  height: auto; /* Maintain aspect ratio */
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">University</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'profile_home_by_username' username=username %}">Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'documents_home_by_username' username=username %}">Documents</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'applicationHomeRenderer' username=username %}">Application</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'publication_home_by_username' username=username %}">Publication</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div>Welcome, {{ username }}</div>
+
+<div id="carouselUniversity" class="carousel slide" data-ride="carousel" data-interval="5000">
+  <ol class="carousel-indicators">
+    <li data-target="#carouselUniversity" data-slide-to="0" class="active"></li>
+    <li data-target="#carouselUniversity" data-slide-to="1"></li>
+    <li data-target="#carouselUniversity" data-slide-to="2"></li>
+    <li data-target="#carouselUniversity" data-slide-to="3"></li>
+    <li data-target="#carouselUniversity" data-slide-to="4"></li>
+    <li data-target="#carouselUniversity" data-slide-to="5"></li>
+  </ol>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="{% static 'university1.jpg' %}" class="d-block w-100" alt="University 1">
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'university2.jpg' %}" class="d-block w-100" alt="University 2">
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'university3.jpg' %}" class="d-block w-100" alt="University 3">
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'university4.jpg' %}" class="d-block w-100" alt="University 4">
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'university5.jpg' %}" class="d-block w-100" alt="University 5">
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'university6.jpg' %}" class="d-block w-100" alt="University 6">
+    </div>
+  </div>
+  <a class="carousel-control-prev" href="#carouselUniversity" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselUniversity" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+<div class="container mt-5">
+  <form method="POST" action="{% url 'StudentHome' %}">
+    {% csrf_token %}
+    <div class="form-row align-items-center">
+      <div class="col-auto">
+        <label class="sr-only" for="searchYear">Year</label>
+        <input type="number" class="form-control mb-2" id="searchYear" name="year" placeholder="Enter year">
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary mb-2">Search</button>
+      </div>
+    </div>
+  </form>
+</div>
+<div id="carouselProgram" class="carousel slide" data-ride="carousel" data-interval="5000">
+  <ol class="carousel-indicators">
+    {% for program in programs_info %}
+      <li data-target="#carouselProgram" data-slide-to="{{ forloop.counter0 }}" {% if forloop.first %}class="active"{% endif %}></li>
+    {% endfor %}
+  </ol>
+  <div class="carousel-inner">
+    {% for program in programs_info %}
+      <div class="carousel-item {% if forloop.first %}active{% endif %}">
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <h3>{{ program.programme_name }}</h3>
+              <p>Tuition Fee: ${{ program.tuition_fee }}</p>
+              <p>Duration: {{ program.duration }} months</p>
+              <p>Maximum Students: XXXX</p>
+              <p>Department: {{ program.department_name }}</p>
+              <p>Department Head: {{ program.department_head }}</p>
+              <p>Established Date: {{ program.department_established_date }}</p>
+              <p>University: {{ program.university_name }}</p>
+              <p>Location: {{ program.university_location }}</p>
+              <p>Rank: {{ program.university_rank }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  <a class="carousel-control-prev" href="#carouselProgram" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselProgram" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+$('.carousel').carousel({
+  interval: 5000
+});
+</script>
+
+</body>
+</html> -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Carousel</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+    body {
+      background-color: #fff; /* Set background color to black */
+      color: #000; /* Set text color to bright white */
+      margin: 0;
+      padding: 0;
+    }
+    
+    /* Any other styles you have */
+    
+    .carousel {
+      position: relative; /* Set position to relative */
+      width: 100%; /* Set width */
+      height: 100vh;
+      margin: 0 auto; /* Center horizontally with margin */
+    }
+    
+    .carousel-item img {
+      max-width: 100%; /* Set maximum width for images */
+      height: 100%; /* Maintain aspect ratio */
+      object-fit: contain;
+    }
+    .navbar {
+                background-color: #363d52 !important; /* Set navbar background color to black */
+            }
+            .navbar-brand, .navbar-nav .nav-link {
+                color: #fff !important; /* Set navbar text color to white */
+            }
+            .navbar-nav .nav-link:hover {
+                color: #ccc !important; /* Set navbar text color on hover */
+            }
+    </style>
+    </head>
+<body>
+
+<!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">University</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'profile_home_by_username' username=username %}">Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'documents_home_by_username' username=username %}">Documents</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'applicationHomeRenderer' username=username %}">Application</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'publication_home_by_username' username=username %}">Publication</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+ -->
+ <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">University</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'profile_home_by_username' username=username %}">Profile</a>
+      </li>
+      <!-- <li class="nav-item">
+        <a class="nav-link" href="{% url 'documents_home_by_username' username=username %}">Documents</a>
+      </li> -->
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'applicationHomeRenderer' username=username %}">Application</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'publication_home_by_username' username=username %}">Publication</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav "> <!-- Aligns items to the right -->
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'search_reports_rendererer' username=username %}">Reports</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+ <!-- Print the username -->
+<div>Welcome, {{ username }}</div>
+
+<!-- University Carousel -->
+<div id="carouselUniversity" class="carousel slide" data-ride="carousel" data-interval="5000">
+  <ol class="carousel-indicators">
+    <li data-target="#carouselUniversity" data-slide-to="0" class="active"></li>
+    <li data-target="#carouselUniversity" data-slide-to="1"></li>
+    <li data-target="#carouselUniversity" data-slide-to="2"></li>
+    <li data-target="#carouselUniversity" data-slide-to="3"></li>
+    <li data-target="#carouselUniversity" data-slide-to="4"></li>
+    <li data-target="#carouselUniversity" data-slide-to="5"></li>
+  </ol>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="{% static 'university1.jpg' %}" class="d-block w-100" alt="University 1">
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'university2.jpg' %}" class="d-block w-100" alt="University 2">
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'university3.jpg' %}" class="d-block w-100" alt="University 3">
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'university4.jpg' %}" class="d-block w-100" alt="University 4">
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'university5.jpg' %}" class="d-block w-100" alt="University 5">
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'university6.jpg' %}" class="d-block w-100" alt="University 6">
+    </div>
+  </div>
+  <a class="carousel-control-prev" href="#carouselUniversity" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselUniversity" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+// JavaScript for triggering carousel auto slide after 5 seconds
+$('.carousel').carousel({
+  interval: 5000
+});
+</script>
+
+</body>
+</html>

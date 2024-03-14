@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>See All Academic Records</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Style for card layout */
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            transition: 0.3s;
+            width: 300px;
+            margin: 10px;
+            float: left;
+            background-color: #f9f9f9;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .container {
+            padding: 2px 16px;
+        }
+
+        /* Style for transcript link */
+        .transcript-link {
+            text-decoration: none;
+            color: blue;
+        }
+
+        .transcript-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Style for buttons */
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 8px 14px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 12px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">University</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'profile_home_by_username' username=username %}">Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'applicationHomeRenderer' username=username %}">Application</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'publication_home_by_username' username=username %}">Publication</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container">
+    <h1>All Academic Records</h1>
+
+    {% if academic_records %}
+    {% for record in academic_records %}
+    <div class="card">
+        <div class="container">
+            <h4><b>Institution: </b>{{ record.1 }}</h4>
+            <p><b>Country: </b>{{ record.2 }}</p>
+            <p><b>City: </b>{{ record.3 }}</p>
+            <p><b>Dates Attended: </b>{{ record.4 }}</p>
+            <p><b>Level of Study: </b>{{ record.5 }}</p>
+            <p><b>Format of Study: </b>{{ record.6 }}</p>
+            <p><b>GPA Explanation: </b>{{ record.7 }}</p>
+            {% if record.8 %}
+            <p><a href="data:application/pdf;base64,{{ record.8 }}" class="transcript-link" target="_blank">View
+                    Transcript</a></p>
+            {% else %}
+            <p>No transcript available</p>
+            {% endif %}
+            <div class="action-buttons">
+                <form action="{% url 'updateAcademicRecordRenderer' username=username %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="record_id" value="{{ record.0 }}">
+                    <button type="submit" class="button">Update</button>
+                </form>
+                <form action="{% url 'deleteAcademicRecord' username=username %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="record_id" value="{{ record.0 }}">
+                    <button type="submit" class="button">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <p>No academic records found.</p>
+    {% endif %}
+    <br><br>
+    <form action="{% url 'addAcademicRecordRenderer' username=username %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="username" value="{{ username }}">
+        <input type="hidden" name="do_it" value="true">
+        <button type="submit" class="button">Add Academic Record</button>
+    </form>
+    <br><br>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

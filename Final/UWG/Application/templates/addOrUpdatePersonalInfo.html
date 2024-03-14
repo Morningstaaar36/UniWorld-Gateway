@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add or Update Personal Information</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #fff; /* Set background color to black */
+            color: #000; /* Set text color to white */
+            padding: 20px;
+        }
+        h1 {
+            color: #007bff; /* Set heading color to white */
+        }
+        .navbar {
+            background-color: #363d52 !important; /* Set navbar background color to black */
+        }
+        .navbar-brand, .navbar-nav .nav-link {
+            color: #fff !important; /* Set navbar text color to white */
+        }
+        .navbar-nav .nav-link:hover {
+            color: #ccc !important; /* Set navbar text color on hover */
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">University</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'profile_home_by_username' username=username %}">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'applicationHomeRenderer' username=username %}">Application</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'publication_home_by_username' username=username %}">Publication</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- End Navbar -->
+
+    <h1>Add or Update Personal Information</h1>
+
+    {% if workType == "add" %}
+    <!-- Form for adding personal information -->
+    <form method="post" action="{% url 'addPersonalInfo' username=username %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="workType" value="add">
+
+        <!-- Add a hidden input field to store the application_id -->
+        <input type="hidden" name="application_id" value="{{ application_id }}">
+
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" value="John Doe" required><br> <!-- Default value for Name -->
+
+        <label for="full_name">Full Name:</label><br>
+        <input type="text" id="full_name" name="full_name" value="John Doe" required><br> <!-- Default value for Full Name -->
+
+        <label for="legal_name">Legal Name:</label><br>
+        <input type="text" id="legal_name" name="legal_name" value="John Doe" required><br> <!-- Default value for Legal Name -->
+
+        <label for="maiden_name">Maiden Name:</label><br>
+        <input type="text" id="maiden_name" name="maiden_name" value="Jane Doe" required><br> <!-- Default value for Maiden Name -->
+
+        <!-- Input field for image -->
+        <label for="image">Image:</label><br>
+        <input type="file" id="image" name="image" accept="image/*"><br>
+
+        <button type="submit">Add Personal Information</button>
+    </form>
+    {% endif %}
+
+    {% if workType == "update" %}
+    <!-- Form for updating personal information -->
+    <form method="post" action="{% url 'updatePersonalInfo' username=username %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="workType" value="update">
+
+        <!-- Add a hidden input field to store the application_id for updating -->
+        <input type="hidden" name="application_id" value="{{ application_id }}">
+
+        <label><input type="checkbox" name="update_name" value="true"> Update Name</label><br>
+        <label><input type="checkbox" name="update_full_name" value="true"> Update Full Name</label><br>
+        <label><input type="checkbox" name="update_legal_name" value="true"> Update Legal Name</label><br>
+        <label><input type="checkbox" name="update_maiden_name" value="true"> Update Maiden Name</label><br>
+        <label><input type="checkbox" name="update_image" value="true"> Update Image</label><br>
+
+        <label for="name">New Name:</label><br>
+        <input type="text" id="name" name="name"><br>
+
+        <label for="full_name">New Full Name:</label><br>
+        <input type="text" id="full_name" name="full_name"><br>
+
+        <label for="legal_name">New Legal Name:</label><br>
+        <input type="text" id="legal_name" name="legal_name"><br>
+
+        <label for="maiden_name">New Maiden Name:</label><br>
+        <input type="text" id="maiden_name" name="maiden_name"><br>
+
+        <!-- Input field for updated image -->
+        <label for="image">New Image:</label><br>
+        <input type="file" id="image" name="image" accept="image/*"><br>
+
+        <button type="submit">Update Personal Information</button>
+    </form>
+    {% endif %}
+
+    <script>
+        function submitForm() {
+            const form = document.querySelector('form');
+            form.submit();
+        }
+    </script>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

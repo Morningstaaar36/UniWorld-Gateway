@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application Home</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #fff; /* Set background color to black */
+            color: #000; /* Set text color to white */
+            padding: 20px;
+        }
+        h1 {
+            color: #007bff; /* Set heading color to white */
+        }
+        .navbar {
+            background-color: #363d52 !important; /* Set navbar background color to black */
+        }
+        .navbar-brand, .navbar-nav .nav-link {
+            color: #fff !important; /* Set navbar text color to white */
+        }
+        .navbar-nav .nav-link:hover {
+            color: #ccc !important; /* Set navbar text color on hover */
+        }
+        .btn {
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">University</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'profile_home_by_username' username=username %}">Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'applicationHomeRenderer' username=username %}">Application</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'publication_home_by_username' username=username %}">Publication</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<h1>Welcome, {{ username }}</h1>
+
+{% if has_application_id %}
+<a href="{% url 'resumeApplication' username=username %}" class="btn btn-primary">Resume Application</a>
+<a href="{% url 'seeProgramSelection' username=username %}" class="btn btn-info">See Program Selection</a><br><br>
+{% endif %}
+
+{% if has_personal_info %}
+<a href="{% url 'updatePersonalInfoRenderer' username=username %}" class="btn btn-info">Update Personal Info</a>
+<a href="{% url 'seePersonalInfo' username=username %}" class="btn btn-info">See Personal Info</a>
+<a href="{% url 'deletePersonalInfo' username=username %}" class="btn btn-danger">Delete Personal Info</a><br><br>
+{% endif %}
+
+{% if has_biological_info %}
+<a href="{% url 'updateBiologicalInfoRenderer' username=username %}" class="btn btn-info">Update Biological Info</a>
+<a href="{% url 'seeBiologicalInfo' username=username %}" class="btn btn-info">See Biological Info</a>
+<a href="{% url 'deleteBiologicalInfo' username=username %}" class="btn btn-danger">Delete Biological Info</a><br><br>
+{% endif %}
+
+{% if has_contact_info %}
+<a href="{% url 'updateContactInfoRenderer' username=username %}" class="btn btn-info">Update Contact Info</a>
+<a href="{% url 'seeContactInfo' username=username %}" class="btn btn-info">See Contact Info</a>
+<a href="{% url 'deleteContactInfo' username=username %}" class="btn btn-danger">Delete Contact Info</a><br><br>
+{% endif %}
+
+{% if has_address_info %}
+<a href="{% url 'updateAddressRenderer' username=username %}" class="btn btn-info">Update Address</a>
+<a href="{% url 'seeAddress' username=username %}" class="btn btn-info">See Address</a>
+<a href="{% url 'deleteAddress' username=username %}" class="btn btn-danger">Delete Address</a><br><br>
+{% endif %}
+
+{% if has_citizenship_info %}
+<a href="{% url 'updateCitizenshipInfoRenderer' username=username %}" class="btn btn-info">Update Citizenship Info</a>
+<a href="{% url 'seeCitizenshipInfo' username=username %}" class="btn btn-info">See Citizenship Info</a>
+<a href="{% url 'deleteCitizenshipInfo' username=username %}" class="btn btn-danger">Delete Citizenship Info</a><br><br>
+{% endif %}
+
+{% if has_academic_record %}
+<a href="{% url 'seeAcademicRecord' username=username %}" class="btn btn-info">See Academic Record</a><br><br>
+{% endif %}
+
+{% if has_portfolio %}
+<a href="{% url 'updatePortfolioRenderer' username=username %}" class="btn btn-info">Update Portfolio</a>
+<a href="{% url 'seePortfolio' username=username %}" class="btn btn-info">See Portfolio</a>
+<a href="{% url 'deletePortfolio' username=username %}" class="btn btn-danger">Delete Portfolio</a><br><br>
+{% endif %}
+
+{% if has_gmat_score %}
+<a href="{% url 'updateGMATRenderer' username=username %}" class="btn btn-info">Update GMAT Score</a>
+<a href="{% url 'seeGMAT' username=username %}" class="btn btn-info">See GMAT Score</a>
+<a href="{% url 'deleteGMAT' username=username %}" class="btn btn-danger">Delete GMAT Score</a><br><br>
+{% endif %}
+
+{% if has_gre_score %}
+<a href="{% url 'updateGRERenderer' username=username %}" class="btn btn-info">Update GRE Score</a>
+<a href="{% url 'seeGRE' username=username %}" class="btn btn-info">See GRE Score</a>
+<a href="{% url 'deleteGRE' username=username %}" class="btn btn-danger">Delete GRE Score</a><br><br>
+{% endif %}
+
+{% if has_ielts_score %}
+<a href="{% url 'updateIELTSRenderer' username=username %}" class="btn btn-info">Update IELTS Score</a>
+<a href="{% url 'seeIELTS' username=username %}" class="btn btn-info">See IELTS Score</a>
+<a href="{% url 'deleteIELTS' username=username %}" class="btn btn-danger">Delete IELTS Score</a><br><br>
+{% endif %}
+
+{% if has_toefl_score %}
+<a href="{% url 'updateTOEFLRenderer' username=username %}" class="btn btn-info">Update TOEFL Score</a>
+<a href="{% url 'seeTOEFL' username=username %}" class="btn btn-info">See TOEFL Score</a>
+<a href="{% url 'deleteTOEFL' username=username %}" class="btn btn-danger">Delete TOEFL Score</a><br><br>
+{% endif %}
+
+{% if not has_application_id %}
+<a href="{% url 'createApplication' username=username %}" class="btn btn-primary">Create Application</a>
+{% endif %}
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biological Information</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+      body {
+          background-color: #fff; /* Set background color to black */
+          color: #000; /* Set text color to white */
+          padding: 20px;
+      }
+      h1 {
+          color: #007bff; /* Set heading color to white */
+      }
+      .navbar {
+          background-color: #363d52 !important; /* Set navbar background color to black */
+      }
+      .navbar-brand, .navbar-nav .nav-link {
+          color: #fff !important; /* Set navbar text color to white */
+      }
+      .navbar-nav .nav-link:hover {
+          color: #ccc !important; /* Set navbar text color on hover */
+      }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">University</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'profile_home_by_username' username=username %}">Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'applicationHomeRenderer' username=username %}">Application</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'publication_home_by_username' username=username %}">Publication</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container">
+    <h1>Biological Information</h1>
+    <p>First Name: {{ first_name }}</p>
+    <p>Last Name: {{ last_name }}</p>
+    <p>Date of Birth: {{ date_of_birth }}</p>
+    <p>Place of Birth: {{ place_of_birth }}</p>
+    <p>Country of Birth: {{ country_of_birth }}</p>
+    <p>City of Birth: {{ city_of_birth }}</p>
+    <p>Gender: {{ gender }}</p>
+    <p>Blood Type: {{ blood_type }}</p>
+    <p>Height: {{ height }}</p>
+    <p>Weight: {{ weight }}</p>
+    <p>Hair Color: {{ hair_color }}</p>
+    <p>Eye Color: {{ eye_color }}</p>
+    <p>Handedness: {{ handedness }}</p>
+    <p>Marital Status: {{ marital_status }}</p>
+    <p>Religion: {{ religion }}</p>
+    <p>Ethnicity: {{ ethnicity }}</p>
+    <p>Nationality: {{ nationality }}</p>
+    <p>Native Language: {{ native_language }}</p>
+    <p>Citizenship: {{ citizenship }}</p>
+    <p>Disability: {{ disability }}</p>
+
+    {% if medical_reports_base64 %}
+    <h2>Medical Reports</h2>
+    <embed src="data:application/pdf;base64,{{ medical_reports_base64 }}" type="application/pdf" width="100%" height="600px" />
+    {% else %}
+    <p>No medical reports available.</p>
+    {% endif %}
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

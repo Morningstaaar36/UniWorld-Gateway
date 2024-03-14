@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url("{% static 'background.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            color: #ffffff; /* Set text color to white for better readability on the background */
+        }
+
+        .card {
+            background-color: #8B4513; /* Wood color */
+            color: #ffffff; /* White text */
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            color: #ffffff; /* White text */
+        }
+
+        .btn-primary {
+            background-color: #ffffff; /* White button */
+            color: #8B4513; /* Wood color text */
+        }
+
+        .btn-primary:hover {
+            background-color: #f2f2f2; /* Lighter background on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Welcome, {{ username }}</h1>
+        <h2 class="mb-4">What would you like to do?</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Add Document</h5>
+                        <p class="card-text">Click below to add a document.</p>
+                        <a href="{% url 'add_document' username=username %}" class="btn btn-primary">Add Document</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">See Documents</h5>
+                        <p class="card-text">Click below to see your documents.</p>
+                        <a href="{% url 'see_documents' username=username %}" class="btn btn-primary">See Documents</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Manage Documents</h5>
+                        <p class="card-text">Click below to manage your documents.</p>
+                        <a href="{% url 'manage_documents' username=username %}" class="btn btn-primary">Manage Documents</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

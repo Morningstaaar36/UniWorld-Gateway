@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Program Page</title>
+    <style>
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        }
+        .card h3 {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome, {{ username }}!</h1>
+    <h2>Programs Available at the Selected Location:</h2>
+    <div class="cards-container">
+        {% for program in programs %}
+            <div class="card">
+                <h3>{{ program.programme_name }}</h3>
+                <p><strong>University:</strong> {{ program.university_name }}</p>
+                <p><strong>Location:</strong> {{ program.university_location }}</p>
+                <p><strong>Established Date:</strong> {{ program.university_established_date }}</p>
+                <p><strong>Rank:</strong> {{ program.university_rank }}</p>
+                <p><strong>Max Students in University:</strong> {{ program.university_max_student }}</p>
+                <p><strong>Department Name:</strong> {{ program.department_name }}</p>
+                <p><strong>Department Head:</strong> {{ program.department_head }}</p>
+                <p><strong>Department Established Date:</strong> {{ program.department_established_date }}</p>
+                <p><strong>Max Students in Department:</strong> {{ program.department_max_student }}</p>
+                <p><strong>Program ID:</strong> {{ program.programme_id }}</p>
+                <p><strong>Tuition Fee:</strong> {{ program.tuition_fee }}</p>
+                <p><strong>Duration:</strong> {{ program.duration }}</p>
+                <p><strong>Application Deadline:</strong> {{ program.application_deadline }}</p>
+                <p><strong>Program Ranking:</strong> {{ program.programme_ranking }}</p>
+                <p><strong>Program Max Students:</strong> {{ program.programme_max_student }}</p>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
